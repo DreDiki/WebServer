@@ -1,0 +1,5 @@
+#ignore build file
+build/
+linuxbuild/
+#ignore notepad++
+NotepadProject
