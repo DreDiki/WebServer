@@ -6,11 +6,15 @@
 #include "Connection.h"
 #include "http.h"
 #include "util.h" 
-
+#include "Config.h"
 int main(int argc,char * argv[]){
+	Config config;
+	config.read("config");
+	
 	Socket socket;
 	socket.sethandler(&http::httpHandler);
-	socket.begin(8080);
+	socket.begin(config.getInt("listen",8080));
+	
 	std::string command;
 	bool stop=false;
 	while(!stop){

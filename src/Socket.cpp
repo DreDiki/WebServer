@@ -57,7 +57,7 @@ void Socket::loop(){
 			continue;
 		}
 		c.available = true;
-		inet_ntop(AF_INET, &c.clientaddr.sin_addr, c.ipaddr, 16);
+		inet_ntop(AF_INET, &c.clientaddr.sin_addr, c.ipaddr, 16); 
 		//char ip_addr[16];
 		//std::cout<<ip_addr<<ntohs(clientaddr.sin_port);
 		info("Client %s:%d connected", c.ipaddr, ntohs(c.clientaddr.sin_port));

@@ -4,13 +4,13 @@
 int Connection::read(char * text, int size){
 	if(!available)return -1;
 	//int recvbytes = recv(connfd, text, size*sizeof(char), 0);
-	return recv(connfd, text, size*sizeof(char), 0);
+	return recv(connfd, text, size, 0);
 }
 
 int Connection::readonly(char * text, int size){
 	if(!available)return -1;
 	//int recvbytes = recv(connfd, text, size*sizeof(char), 0);
-	return recv(connfd, text, size*sizeof(char), MSG_PEEK);
+	return recv(connfd, text, size, MSG_PEEK);
 }
 
 string Connection::readline(char delim){
@@ -18,8 +18,9 @@ string Connection::readline(char delim){
 	if(!available)return result;
 	char buffer[1024];
 	int size;
-	if(recv(connfd, buffer, sizeof(char), MSG_PEEK)==1&&buffer[0]==delim){
-		recv(connfd, buffer, sizeof(char),0);
+	if(recv(connfd, buffer,1, MSG_PEEK)==1&&buffer[0]==delim){
+		//error("123");
+		recv(connfd, buffer,1,0);
 		return string(&delim,1);
 	}
 	while(true){
@@ -42,16 +43,18 @@ string Connection::readline(char delim){
 			break;
 		}
 	}
-	size=result.size()+1;
+	size=result.size()+2;
 	for(;size>1024;size-=1024){
-		if(recv(connfd, buffer, sizeof(buffer), 0)!=1024)continue;
+		if(recv(connfd, buffer, sizeof(buffer), 0)!=1024)break;
 	}
-	recv(connfd, buffer, sizeof(char)*size, 0);
+	//error("%d",size);
+	recv(connfd, buffer, size, 0);
+	//std::cout<<result;
 	return result;
 }
 bool Connection::write(const char * text, int size){
 	if(!available)return false;
-	int r = send(connfd, text, size*sizeof(char), 0);
+	int r = send(connfd, text, size, 0);
 	return r==-1;
 }
 

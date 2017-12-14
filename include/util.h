@@ -66,6 +66,21 @@ static constexpr unsigned long long operator "" _hash(char const* p, size_t)
 
 // https://stackoverflow.com/questions/236129/the-most-elegant-way-to-iterate-the-words-of-a-string
 
+static std::vector<std::string> split(const std::string &text, char sep) {
+    std::vector<std::string> tokens;
+    std::size_t start = 0, end = 0;
+    while ((end = text.find(sep, start)) != std::string::npos) {
+        if (end != start) {
+          tokens.push_back(text.substr(start, end - start));
+        }
+        start = end + 1;
+    }
+    if (end != start) {
+       tokens.push_back(text.substr(start));
+    }
+    return tokens;
+}
+
 template<typename Out>
 static void split(const std::string &s, char delim, Out result) {
     std::stringstream ss(s);
@@ -75,11 +90,11 @@ static void split(const std::string &s, char delim, Out result) {
         *(result++) = item;
     }
 }
-
+/**
 static std::vector<std::string> split(const std::string &s, char delim) {
     std::vector<std::string> elems;
     split(s, delim, std::back_inserter(elems));
     return elems;
-}
+}**/
 
 #endif
