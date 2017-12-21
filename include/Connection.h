@@ -3,6 +3,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string>
+#include <mutex>
+
 #ifndef __DREDIKI_CONNECTION__
 #define __DREDIKI_CONNECTION__
 using std::string;

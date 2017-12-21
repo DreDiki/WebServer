@@ -1,7 +1,27 @@
 #include <Config.h>
 #include <fstream>
 #include "util.h"
+//#include <mutex>
+
+Config::Config(){
+	
+}
+
+Config * Config::obj = nullptr;
+std::mutex Config::mtx; 
+
+Config * Config::getInstance(){
+	if(!obj){
+		mtx.lock();
+		if(!obj){
+			obj = new Config();
+		}
+		mtx.unlock();
+	}
+	return obj;
+}
 void Config::read(const char * filename){
+	configs.clear();
 	std::fstream file;
 	file.open(filename, std::ios::in);
 	std::string s;
@@ -14,8 +34,6 @@ void Config::read(const char * filename){
 		}
 		file.close();
 	}
-	
-	
 }
 
 std::string Config::getString(const char *s,std::string defaultValue){

@@ -8,12 +8,12 @@
 #include "util.h" 
 #include "Config.h"
 int main(int argc,char * argv[]){
-	Config config;
-	config.read("config");
+	Config* config = Config::getInstance();
+	config->read("config");
 	
 	Socket socket;
 	socket.sethandler(&http::httpHandler);
-	socket.begin(config.getInt("listen",8080));
+	socket.begin(config->getInt("listen",8080));
 	
 	std::string command;
 	bool stop=false;

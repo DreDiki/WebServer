@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 #2.project name，指定项目的名称，一般和项目的文件夹名称对应
-PROJECT(ftpserver)
+PROJECT(httpserver)
 
 # c++11 support
 include(CheckCXXCompilerFlag)  
